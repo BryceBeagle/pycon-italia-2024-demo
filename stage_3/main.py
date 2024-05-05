@@ -1,16 +1,15 @@
-# Import from a zipfile using our own PathEntryFinder
+# Import from a zipfile using our own MetaPathFinder
 
 import sys
 from pathlib import Path
 from typing import Final
 
-from stage_2.finder import ZipFinder
+from stage_3.finder import ZipFinder
 
 ZIP_PATH: Final = Path("/tmp/pycon-italia-2024.zip")
 assert ZIP_PATH.exists()
 
-sys.path.insert(0, str(ZIP_PATH))
-sys.path_hooks.insert(0, ZipFinder.path_hook)
+sys.meta_path.append(ZipFinder(ZIP_PATH))
 
 from what import FooBar
 
