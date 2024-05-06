@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from types import ModuleType
 from urllib.error import HTTPError
 
-from stage_4.loader import GitLoader, GitLoaderState
+from stage_4.loader import GitHubLoader, GitHubLoaderState
 
 
 class GitHubFinder(MetaPathFinder):
@@ -56,11 +56,11 @@ class GitHubFinder(MetaPathFinder):
 
         spec = importlib.util.spec_from_loader(
             name=fullname,
-            loader=GitLoader(),
+            loader=GitHubLoader(),
             origin=origin,
             is_package=is_package,
         )
-        spec.loader_state = GitLoaderState(download_file=download_file)
+        spec.loader_state = GitHubLoaderState(download_file=download_file)
 
         if is_package:
             spec.submodule_search_locations = []

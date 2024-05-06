@@ -7,17 +7,17 @@ from zipfile import ZipFile
 
 
 @dataclass
-class GitLoaderState:
+class GitHubLoaderState:
     download_file: Path
 
 
-class GitLoader(Loader):
+class GitHubLoader(Loader):
     def create_module(self, spec: ModuleSpec) -> ModuleType | None:
         return None
 
     def exec_module(self, module: ModuleType) -> None:
         loader_state = module.__spec__.loader_state
-        assert isinstance(loader_state, GitLoaderState)
+        assert isinstance(loader_state, GitHubLoaderState)
 
         origin = module.__spec__.origin
 
