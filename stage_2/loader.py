@@ -27,5 +27,4 @@ class ZipLoader(Loader):
 
         code = compile(file_content, origin, mode="exec")
 
-        module.__dict__["__file__"] = origin
         exec(code, module.__dict__)
