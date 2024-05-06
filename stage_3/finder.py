@@ -41,13 +41,16 @@ class ZipFinder(MetaPathFinder):
             self, fullname: str, file: PurePath, *, is_package: bool
     ) -> ModuleSpec:
         origin = str(self.path / file)
+
         spec = importlib.util.spec_from_loader(
             name=fullname,
             loader=ZipLoader(),
             origin=origin,
             is_package=is_package,
         )
-        spec.submodule_search_locations = [self.path / fullname]
         spec.loader_state = ZipLoaderState(zip_file=self.path)
+
+        if is_package:
+            spec.submodule_search_locations = [self.path / fullname]
 
         return spec
