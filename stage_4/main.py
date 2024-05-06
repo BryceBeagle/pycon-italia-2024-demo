@@ -1,7 +1,6 @@
 # Import from a zipfile using our own MetaPathFinder
 
 import sys
-from pathlib import Path
 from typing import Final
 
 from stage_4.finder import GitHubFinder

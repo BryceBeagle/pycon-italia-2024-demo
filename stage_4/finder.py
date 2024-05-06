@@ -3,13 +3,11 @@ import shutil
 import urllib.request
 from functools import cache
 from importlib.abc import MetaPathFinder
-from importlib.machinery import ModuleSpec
+from importlib.machinery import ModuleSpec, SourceFileLoader
 from pathlib import PurePath, Path
 from tempfile import NamedTemporaryFile
 from types import ModuleType
 from urllib.error import HTTPError
-
-from stage_4.loader import GitHubLoader, GitHubLoaderState
 
 
 class GitHubFinder(MetaPathFinder):
@@ -56,11 +54,10 @@ class GitHubFinder(MetaPathFinder):
 
         spec = importlib.util.spec_from_loader(
             name=fullname,
-            loader=GitHubLoader(),
+            loader=SourceFileLoader(fullname, str(download_file)),
             origin=origin,
             is_package=is_package,
         )
-        spec.loader_state = GitHubLoaderState(download_file=download_file)
 
         if is_package:
             spec.submodule_search_locations = []
