@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 from typing import Final
 
-from stage_2.finder import ZipFinder
+from pycon_italia_2024.stage_2.finder import ZipFinder
 
 ZIP_PATH: Final = Path("/tmp/pycon-italia-2024.zip")
 assert ZIP_PATH.exists()

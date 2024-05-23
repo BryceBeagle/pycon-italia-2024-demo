@@ -1,33 +1,22 @@
 import importlib.util
 from functools import cached_property
-from importlib.abc import PathEntryFinder
+from importlib.abc import MetaPathFinder
 from importlib.machinery import ModuleSpec
 from pathlib import Path, PurePath
 from types import ModuleType
-from typing import Self
 from zipfile import ZipFile
 
-from stage_2.loader import ZipLoader, ZipLoaderState
+from pycon_italia_2024.stage_3.loader import ZipLoader, ZipLoaderState
 
 
-class ZipFinder(PathEntryFinder):
+class ZipFinder(MetaPathFinder):
     def __init__(self, path: Path) -> None:
         self.path = path
-
-    @classmethod
-    def path_hook(cls, path: str) -> Self | None:
-        path = Path(path)
-
-        if not path.is_file():
-            raise ImportError("not a file")
-        if not path.suffix == ".zip":
-            raise ImportError("not a zip file")
-
-        return cls(path)
 
     def find_spec(
             self,
             fullname: str,
+            path: str | None,
             target: ModuleType | None = None,
     ) -> ModuleSpec | None:
         if target is not None:

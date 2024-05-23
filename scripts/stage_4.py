@@ -3,7 +3,7 @@
 import sys
 from typing import Final
 
-from stage_4.finder import GitHubFinder
+from pycon_italia_2024.stage_4.finder import GitHubFinder
 
 GITHUB_REPO: Final = "BryceBeagle/pycon-italia-2024-python"
 

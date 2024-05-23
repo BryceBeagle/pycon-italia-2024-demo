@@ -3,7 +3,7 @@
 import sys
 from typing import Final
 
-from stage_5.finder import GitHubRustFinder
+from pycon_italia_2024.stage_5.finder import GitHubRustFinder
 
 RUST_PACKAGE: Final = "what"
 GIT_REPO: Final = "https://github.com/BryceBeagle/pycon-italia-2024-rust"
