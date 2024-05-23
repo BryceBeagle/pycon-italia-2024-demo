@@ -1,10 +1,6 @@
-import shutil
 import zipfile
-import subprocess
 from pathlib import Path
 from typing import Final
-
-GIT_REPO: Final = "https://github.com/brycebeagle/pycon-italia-2024-python.git"
 
 CLONE_DIR: Final = Path("/tmp/pycon-italia-2024/")
 ZIP_PATH: Final = Path("/tmp/pycon-italia-2024.zip")
@@ -13,10 +9,9 @@ PACKAGE_DIR = "what/"
 
 
 def main() -> None:
-    if CLONE_DIR.exists():
-        shutil.rmtree(CLONE_DIR)
+    assert CLONE_DIR.exists(), "Run scripts/_clone_repo.py"
 
-    subprocess.run(["git", "clone", GIT_REPO, CLONE_DIR], check=True)
+    print(f"Creating {ZIP_PATH}")
 
     # zip directory in ZIP_PATH
     with zipfile.ZipFile(ZIP_PATH, mode='w') as zf:
