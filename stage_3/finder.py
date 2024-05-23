@@ -10,7 +10,7 @@ from stage_3.loader import ZipLoader, ZipLoaderState
 
 
 class ZipFinder(MetaPathFinder):
-    def __init__(self, path: Path):
+    def __init__(self, path: Path) -> None:
         self.path = path
 
     def find_spec(
@@ -19,6 +19,9 @@ class ZipFinder(MetaPathFinder):
             path: str | None,
             target: ModuleType | None = None,
     ) -> ModuleSpec | None:
+        if target is not None:
+            return None
+
         # If both foo/ and foo.py exist, foo/ takes priority
         if (file := (PurePath(fullname) / "__init__.py")) in self._files:
             return self._new_spec(fullname, file, is_package=True)
@@ -51,6 +54,9 @@ class ZipFinder(MetaPathFinder):
         spec.loader_state = ZipLoaderState(zip_file=self.path)
 
         if is_package:
+            # Becomes __path__ in the imported module, and then the `path` argument to find_spec
+            # for subpackage searches
+            # Meant to be a hint to future searches of where to look?
             spec.submodule_search_locations = [self.path / fullname]
 
         return spec

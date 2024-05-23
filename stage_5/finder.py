@@ -31,6 +31,11 @@ class GitHubRustFinder(MetaPathFinder):
             origin=str(extension_file),
             is_package=True,
         )
+
+        # Becomes __path__ in the imported module, and then the `path` argument to
+        # find_spec for subpackage searches.
+        # Even though we have nothing to hint, we should still set to [] to indicate
+        # module is a package
         spec.submodule_search_locations = []
 
         return spec
@@ -44,7 +49,11 @@ class GitHubRustFinder(MetaPathFinder):
         return temp_dir_path
 
     def _build_extension(self, rust_project_dir: Path) -> Path:
-        subprocess.run(["cargo", "build", "--release"], cwd=rust_project_dir, check=True)
+        subprocess.run(
+            ["cargo", "build", "--release"],
+            cwd=rust_project_dir,
+            check=True,
+        )
 
         so_file = rust_project_dir / "target" / "release" / f"lib{self.package}.so"
         assert so_file.exists()

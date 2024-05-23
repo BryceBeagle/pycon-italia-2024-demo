@@ -26,5 +26,4 @@ class ZipLoader(Loader):
             file_content = zf.read(str(path_in_zip)).decode()
 
         code = compile(file_content, origin, mode="exec")
-
         exec(code, module.__dict__)

@@ -25,10 +25,10 @@ class GitHubFinder(MetaPathFinder):
         module = PurePath(fullname).with_suffix(".py")
 
         # If both foo/ and foo.py exist, foo/ takes priority
-        if (download_file := self._download_file(package)) is not None:
-            return self._new_spec(fullname, package, download_file, is_package=True)
-        if (download_file := self._download_file()) is not None:
-            return self._new_spec(fullname, module, download_file, is_package=False)
+        if (downloaded_file := self._download_file(package)) is not None:
+            return self._new_spec(fullname, package, downloaded_file, is_package=True)
+        if (downloaded_file := self._download_file()) is not None:
+            return self._new_spec(fullname, module, downloaded_file, is_package=False)
 
         return None
 
@@ -60,6 +60,9 @@ class GitHubFinder(MetaPathFinder):
         )
 
         if is_package:
+            # Becomes __path__ in the imported module, and then the `path` argument to find_spec
+            # for subpackage searches
+            # Meant to be a hint to future searches of where to look?
             spec.submodule_search_locations = []
 
         return spec

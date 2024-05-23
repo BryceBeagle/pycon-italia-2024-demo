@@ -12,3 +12,6 @@ sys.meta_path.append(GitHubFinder(GITHUB_REPO))
 from what import FooBar
 
 print(FooBar.hello_world)
+
+import what
+print(what.__file__)

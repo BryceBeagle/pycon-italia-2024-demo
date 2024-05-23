@@ -11,7 +11,7 @@ from stage_2.loader import ZipLoader, ZipLoaderState
 
 
 class ZipFinder(PathEntryFinder):
-    def __init__(self, path: Path):
+    def __init__(self, path: Path) -> None:
         self.path = path
 
     @classmethod
@@ -55,13 +55,19 @@ class ZipFinder(PathEntryFinder):
             self, fullname: str, file: PurePath, *, is_package: bool
     ) -> ModuleSpec:
         origin = str(self.path / file)
+
         spec = importlib.util.spec_from_loader(
             name=fullname,
             loader=ZipLoader(),
             origin=origin,
             is_package=is_package,
         )
-        spec.submodule_search_locations = [self.path / fullname]
         spec.loader_state = ZipLoaderState(zip_file=self.path)
+
+        if is_package:
+            # Becomes __path__ in the imported module, and then the `path` argument to find_spec
+            # for subpackage searches
+            # Meant to be a hint to future searches of where to look?
+            spec.submodule_search_locations = [self.path / fullname]
 
         return spec
