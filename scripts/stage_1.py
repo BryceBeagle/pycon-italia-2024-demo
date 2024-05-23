@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Final
 
 ZIP_PATH: Final = Path("/tmp/pycon-italia-2024.zip")
-assert ZIP_PATH.exists()
+assert ZIP_PATH.exists(), "Run scripts/_create_zip.py"
 
 sys.path.append(str(ZIP_PATH))
 from what import FooBar

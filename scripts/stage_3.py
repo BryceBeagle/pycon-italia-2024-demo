@@ -7,7 +7,7 @@ from typing import Final
 from pycon_italia_2024.stage_3.finder import ZipFinder
 
 ZIP_PATH: Final = Path("/tmp/pycon-italia-2024.zip")
-assert ZIP_PATH.exists()
+assert ZIP_PATH.exists(), "Run scripts/_create_zip.py"
 
 sys.meta_path.append(ZipFinder(ZIP_PATH))
 
