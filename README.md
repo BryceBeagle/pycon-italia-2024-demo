@@ -1,8 +1,8 @@
 # Description
 
-This repository corresponds to a presentation given at [Pycon Italia 2024][pycon-it].
-It contains some long-form implementations of the truncated examples given at the 
-end of the presentation. 
+This repository corresponds to a [presentation][slides] given at
+[Pycon Italia 2024][pycon-it]. It contains long-form implementations of the truncated
+examples given at the end of the presentation. 
 
 - `stage_0`: Importing a normal package by adding it to `sys.path`
 - `stage_1`: Importing from `.zip` files using the built-in `zipimport` importer
@@ -13,6 +13,7 @@ end of the presentation.
 - `stage_5`: Importing from Rust bindings on GitHub using custom `MetaPathFinder` and
   built-in `ExtensionFileLoader`
 
+[slides]: https://docs.google.com/presentation/d/1erxZyIJacT-nd8txXx-re-3xxyHziqCjz9x2BMQfqgg
 [pycon-it]: https://2024.pycon.it
 
 # Initial Setup
